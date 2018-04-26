@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.mybatis.AlarmMapper">
+
+   <!-- 알람 테이블 생성 -->
+   <insert id="create" parameterType="String">    
+    	CREATE TABLE alarm_${value}(
+    		al_num varchar2(100) primary key,
+    		al_title varchar2(100) ,
+    		al_content varchar2(1000),
+    		al_time date,
+    		al_check varchar2(10),
+    		al_content_url varchar2(1000)
+          )
+
+	</insert>
+	<insert id="create_seq" parameterType="String">
+		CREATE SEQUENCE AL_NUM_${value}_SEQ
+          start with 1
+          increment by 1
+          maxvalue 10000
+	</insert>
+
+	<!-- 알람 추가 -->
+    <insert id="insertAlarm" parameterType="HashMap">
+    	INSERT INTO alarm_${id} VALUES 
+    	(al_num_${id}_seq.nextval,#{al_title},#{al_content},sysdate,#{al_check},#{al_content_url})
+    </insert>
+    
+    <!-- 알람 테이블 가져오기 -->
+    <select id="selectAll" parameterType="String" resultType="Alarm">
+    	SELECT * FROM alarm_${value} 
+    </select>
+    
+    <!-- 알람 삭제 -->
+    <delete id="deleteAlarm" parameterType="Alarm" >
+    	DELETE FROM alarm_${id} where al_num=#{al_num}
+    </delete>
+    
+    <select id="checkAlarm" parameterType="HashMap" resultType="int">
+    	SELECT count(*) FROM alarm_${id} where al_title = #{al_title} 
+    </select>
+    
+    <update id="updateAlarm" parameterType="HashMap">
+    	UPDATE alarm_${id} set al_check ='1' where al_num = #{al_num}
+    </update>
+    
+    <!-- 알람 count -->
+    <select id="selectCount" parameterType="String" resultType="int">
+    	SELECT count(*) FROM alarm_${value} WHERE al_check='0'
+    </select>
+</mapper>

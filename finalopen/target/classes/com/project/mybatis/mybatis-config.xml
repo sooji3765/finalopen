@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+       
+    <typeAliases>
+        <typeAlias type="com.project.user.User" alias="User" />
+    	<typeAlias type="com.project.review.Review" alias="Review"/>
+    	<typeAlias type="com.project.refri.Refri" alias="Refri"/>
+    	<typeAlias type="com.project.ingre.Ingredients" alias="Ingre"/>
+    	<typeAlias type="com.project.alarm.Alarm" alias="Alarm"/>
+    	<typeAlias type="com.project.comment.Comment" alias="Comment"/>
+    	<typeAlias type="com.project.bookmark.Bookmark" alias="Bookmark"/>
+    	<typeAlias type="com.project.memo.Memo" alias="Memo"/>
+    </typeAliases>
+ 
+    <mappers>
+        <mapper resource="/com/project/mybatis/UserMapper.xml" />
+        <mapper resource="/com/project/mybatis/RefriMapper.xml" />
+    	<mapper resource="/com/project/mybatis/ReviewMapper.xml"/>
+    	<mapper resource="/com/project/mybatis/IngreMapper.xml"/>
+    	<mapper resource="/com/project/mybatis/AlarmMapper.xml"/>
+    	<mapper resource="/com/project/mybatis/CommentMapper.xml"/>
+    	<mapper resource="/com/project/mybatis/BookMapper.xml"/>
+    	<mapper resource="/com/project/mybatis/MemoMapper.xml"/>
+    </mappers>
+ 
+</configuration>

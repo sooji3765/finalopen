@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.mybatis.UserMapper">
+   
+    <insert id="insert" parameterType="User">
+
+    	INSERT INTO member(m_id, m_nickname, m_profile, m_logintype, m_regdate, m_ref, m_passwd) 
+        VALUES (#{m_id}, #{m_nickname}, #{m_profile}, #{m_logintype}, sysdate, #{m_ref}, #{m_passwd})
+
+    </insert>
+    
+    <select id="checkMember" parameterType="String" resultType="String">
+    	SELECT m_id FROM member WHERE m_id= #{m_id}
+    </select>
+    
+    <select id="selectUser" parameterType="String" resultType="User">
+    	SELECT * FROM member WHERE m_id= #{m_id}
+    </select>
+    
+    <select id="count" parameterType="String" resultType="Int">
+    	SELECT count(*) FROM member WHERE m_id= #{m_id}
+    </select>
+    
+    <select id="searchNick" parameterType="String" resultType="String">
+    	SELECT m_id FROM MEMBER WHERE m_nickname='${value}'
+    </select>
+    
+    <select id="countNick" parameterType="String" resultType="Int">
+    	SELECT count(*) FROM member WHERE m_nickname= '${value}'
+    </select>
+    
+    <select id="searchPass" parameterType="hashMap" resultType="int">
+    	SELECT count(*) FROM member WHERE m_nickname=#{nickname} and m_id=#{id}
+    </select>
+    
+    <update id="modifyUser" parameterType="User">
+    	UPDATE member set m_rum=#{m_rnum} WHERE m_id=#{m_id} 
+    </update>
+    
+    <select id="selectRefId" parameterType="String" resultType="int">
+    	SELECT count(*) FROM member WHERE m_ref='${value}'
+    </select>
+    
+    <update id="modifyRef" parameterType="hashMap">
+    	UPDATE member set m_ref=#{ref_id} WHERE m_id=#{id} 
+    </update>
+    
+     <update id="changePass" parameterType="hashMap">
+    	UPDATE member set m_passwd=#{pass} WHERE m_id=#{id} 
+    </update>
+    
+ 	<select id="checkRef" parameterType="String" resultType="String">
+    	SELECT m_ref FROM member WHERE m_id= #{m_id}
+    </select>
+    
+    <update id="regUpdate" parameterType="User">
+    	UPDATE member set m_regdate=sysdate WHERE m_id=#{m_id} 
+    </update>
+    
+    <select id="countRef" parameterType="String" resultType="int">
+    	SELECT count(*) FROM member WHERE m_ref='${value}'
+    </select>
+    
+    <select id="selectAllRef" parameterType="String" resultType="User">
+    	SELECT * FROM member WHERE m_ref='${value}'
+    </select>
+    
+    <select id="checkUser" parameterType="hashMap" resultType="int">
+    	SELECT count(*) 
+    	FROM member 
+    	WHERE m_id=#{id} and m_passwd=#{pass}
+    </select>
+
+</mapper>

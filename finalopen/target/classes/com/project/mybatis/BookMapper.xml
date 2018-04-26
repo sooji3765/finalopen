@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.mybatis.BookMapper">
+	
+	<insert id="create" parameterType="String">
+		CREATE TABLE book_${value}(
+		num varchar2(100) primary key,
+		title varchar2(1000),
+		url varchar2(1000),
+		checks varchar2(10),
+		img varchar2(1000)
+		)
+	</insert>
+
+	<insert id="create_seq" parameterType="String">
+		CREATE SEQUENCE book_${value}_seq
+			start with 1
+			increment by 1
+			maxvalue 10000
+	</insert>
+	
+	<insert id="insertBook" parameterType="HashMap">
+		INSERT INTO book_${id}
+		VALUES (book_${id}_seq.nextval, #{book.title}, #{book.url}, #{book.check}, #{book.img})
+	</insert>
+	
+	<select id="selectAll" parameterType="String" resultType="Bookmark">
+    	SELECT * FROM book_${value} ORDER BY num *1
+    </select>
+    
+    <update id="deleteBook" parameterType="HashMap">
+    	DELETE FROM book_${id} WHERE URL='${book.url}'
+    </update>
+    
+    <select id="selectBook" parameterType="HashMap" resultType="int">
+    	SELECT COUNT(*) from book_${id} where URL='${url}'
+    </select>
+    
+    
+    
+    
+</mapper>

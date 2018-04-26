@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.mybatis.RefriMapper">
+
+   <insert id="create" parameterType="string">    
+    	CREATE TABLE refri_${value}(
+    		r_num varchar2(100) primary key,
+    		r_date date,
+    		r_item varchar2(100),
+    		r_item_amount number,
+    		r_item_unit varchar2(100),
+    		r_item_space varchar2(100),
+    		r_item_time number,
+    		r_item_state varchar2(100),
+    		type_id varchar2(100),
+    		ingredients_id varchar2(100)
+          )
+          
+	</insert>
+	<insert id="create_seq">
+		CREATE SEQUENCE R_NUM_${value}_SEQ
+          start with 1
+          increment by 1
+          maxvalue 10000
+	</insert>
+  	
+    <insert id="insertIngre" parameterType="hashMap">
+       INSERT INTO refri_${ref_id} (r_num, r_date, r_item, r_item_amount, r_item_unit, r_item_space,r_item_time,r_item_state,type_id,ingredients_id)
+       VALUES 
+       (r_num_${ref_id}_seq.nextval,
+       sysdate,
+       #{refri.r_item},
+       #{refri.r_item_amount},
+       #{refri.r_item_unit},
+       #{refri.r_item_space},
+       #{refri.r_item_time},
+       '신선',
+       #{refri.type_id},
+       #{refri.ingredients_id})        
+    </insert>
+    
+    <select id="selectAll" parameterType="String" resultType="Refri">
+     	SELECT * FROM refri_${value} ORDER BY r_date ASC
+    </select>
+    
+    <delete id="deleteItem" parameterType="hashMap">
+    	DELETE FROM refri_${r_id} WHERE r_num=${r_num}
+    </delete>
+    
+    <select id="selectOneRef" parameterType="hashMap" resultType="Refri">
+    	SELECT * FROM refri_${r_id} WHERE r_num=${r_num}
+    </select>
+    
+    <update id="updateRef" parameterType="hashMap">
+    	UPDATE refri_${r_id} 
+    	set r_item_amount = #{refri.r_item_amount} , r_item_space=#{refri.r_item_space},
+    	r_item_state= #{refri.r_item_state}, r_date=#{refri.r_date}, r_item_time= #{refri.r_item_time} 
+    	WHERE r_num =#{r_num} 
+    </update>
+    
+    <update id="updateTime" parameterType="hashMap"> 
+    	update refri_${id} set r_item_time=${r_item_time}, r_item_state=${r_item_state} where r_num=${r_num} 
+    </update>
+    
+</mapper>

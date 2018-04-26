@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.mybatis.CommentMapper">
+   
+   <select id="commentCount" parameterType="String" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM COMMENTS 
+        WHERE bno=${value}
+    </select>
+    
+    <select id="commentList" parameterType="String" resultType="Comment">
+        SELECT
+            *
+        FROM COMMENTS
+        WHERE bno=${value}
+    </select>
+    
+    <insert id="commentInsert" parameterType="Comment">
+        INSERT INTO
+        COMMENTS (CNO, BNO, CONTENT, WRITER, NICKNAME ,REGDATE)
+        VALUES(comm_seq.nextval,#{bno},#{content},#{writer},#{nickname},sysdate) 
+    </insert>
+    
+    <update id="commentUpdate" parameterType="hashMap">
+        UPDATE COMMENTS
+            SET
+            CONTENT = #{content},
+            REGDATE = sysdate
+            
+        WHERE CNO = #{cno}
+    </update>
+    
+    <delete id="commentDelete" parameterType="String">
+        DELETE FROM COMMENTS WHERE CNO = ${value}
+    </delete>
+    
+    <select id="selectBno" parameterType="String" resultType="Comment">
+        SELECT *
+        FROM COMMENTS 
+        WHERE bno=${value}
+    </select>
+
+</mapper>

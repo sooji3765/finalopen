@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.mybatis.ReviewMapper">
+   
+    <!-- 리뷰 추가 -->
+    <insert id="insertReview" parameterType="Review">
+    	INSERT INTO review(re_num, re_title, re_content, re_image, re_blog_url, m_id, re_date,re_password) 
+        VALUES (re_num_seq.nextval, #{re_title}, #{re_content}, #{re_image}, #{re_blog_url},#{m_id}, sysdate, #{re_password})
+    </insert>
+    
+    <!-- 리뷰 수정 할때 비밀번호로 체크 -->
+    <select id="checkPw" parameterType="String" resultType="Review">
+    	SELECT * FROM review WHERE re_password= #{re_password}
+    </select>
+    
+    <!-- 리뷰 리스트 출력 -->
+    <select id="selectAll" resultType="Review">
+    	SELECT * FROM review 
+    </select>
+    
+    <!-- 리뷰 하나 보여주기 -->
+    <select id="selectOne" parameterType="String" resultType="Review">
+    	SELECT * FROM review WHERE re_num= #{value}
+    </select>
+    
+    <!-- 내가 쓴 리뷰 보기 -->
+    
+    <select id="selectmyAll" parameterType="String" resultType="Review">
+    	SELECT * FROM review WHERE m_id= #{value}
+    </select>
+    
+    <!-- 리뷰 삭제 -->
+    <delete id="delete" parameterType="String">
+    	DELETE FROM review WHERE re_num = #{value}
+    </delete>
+</mapper>

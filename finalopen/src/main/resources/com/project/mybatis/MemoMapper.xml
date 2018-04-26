@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.mybatis.MemoMapper">
+
+   <insert id="create" parameterType="string">    
+    	CREATE TABLE memo_${value}(
+    		num varchar2(100) primary key,
+    		nickname varchar2(100),
+    		profile varchar2(100),
+    		regdate date,
+    		content varchar2(1000)
+          )
+          
+	</insert>
+	
+	<insert id="create_seq">
+		CREATE SEQUENCE MEMO_NUM_${value}_SEQ
+          start with 1
+          increment by 1
+          maxvalue 10000
+	</insert>
+  	
+    <insert id="insert" parameterType="hashMap">
+    	INSERT INTO memo_${refId}(num, nickname, profile, regdate, content)
+    	VALUES (
+    	memo_num_${refId}_seq.nextval,
+    	'${memo.nickname}',
+    	'${memo.profile}',
+    	sysdate,
+    	'${memo.content}'
+    	
+    	)    	 
+    </insert>
+    
+    <select id="selectAll" parameterType="String" resultType="Memo">
+     	SELECT * FROM memo_${value} ORDER BY regdate DESC
+    </select>
+    
+
+    
+</mapper>
